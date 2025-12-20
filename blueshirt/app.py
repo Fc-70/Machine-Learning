@@ -238,7 +238,7 @@ with c3:
         user["last_phase"] = phase_choice
         user["last_time"] = datetime.utcnow().isoformat()
         save_user(user)
-        st.experimental_rerun()
+        st.rerun()
     st.markdown(f"Current: **{user.get('last_phase','Morning')}**")
 
 st.markdown("---")
@@ -258,7 +258,7 @@ with left:
             record_history(user, action["name"], effects)
             user["last_time"] = datetime.utcnow().isoformat()
             save_user(user)
-            st.experimental_rerun()
+            st.rerun()
 
     st.markdown("---")
     st.markdown("## 📊 Current Stats")
@@ -300,7 +300,7 @@ with right:
             os.remove(USER_DATA_FILE)
         st.session_state.user = load_user()
         save_user(st.session_state.user)
-        st.experimental_rerun()
+        st.rerun()
 
     if st.button("Simulate rough day"):
         user["stats"]["Sleep"] = clamp(user["stats"].get("Sleep",50)-30)
@@ -310,7 +310,7 @@ with right:
         user["last_time"]=datetime.utcnow().isoformat()
         record_history(user,"Simulate rough day",{"Sleep":-30,"Energy":-30,"Hunger":-40,"Stress":30})
         save_user(user)
-        st.experimental_rerun()
+        st.rerun()
 
     if st.button("Simulate recovery"):
         user["stats"]["Sleep"] = clamp(user["stats"].get("Sleep",50)+30)
@@ -320,7 +320,7 @@ with right:
         user["last_time"]=datetime.utcnow().isoformat()
         record_history(user,"Simulate recovery",{"Sleep":30,"Energy":30,"Hunger":20,"Stress":-25})
         save_user(user)
-        st.experimental_rerun()
+        st.rerun()
 
     st.markdown("---")
     st.markdown("## 📝 Notes")
