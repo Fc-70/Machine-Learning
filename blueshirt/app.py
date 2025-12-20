@@ -271,7 +271,7 @@ with c1:
     st.caption("Stability is an aggregated, behavior-driven measure of life balance.")
     st.markdown("### Quick Status")
     # show small stat pills
-    stat_line = " • ".join([f"{k}: {user['stats'][k]}" for k in ["Sleep","Energy","Hunger","Stress","Routine","Social"]])
+    stat_line = " • ".join([f"{k}: {user['stats'].get(k, 50)}" for k in ["Sleep","Energy","Hunger","Stress","Routine","Social"]])
     st.markdown(f"<div class='small'>{stat_line}</div>", unsafe_allow_html=True)
 
 with c2:
