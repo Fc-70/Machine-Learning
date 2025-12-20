@@ -103,19 +103,16 @@ def compute_lifestyle_stability(stats: Dict[str,int]) -> int:
     """
     Combine stats to produce a 0-100 stability score.
     Stress reduces the score (penalty). Hunger is treated positive (full is good).
-    We'll average Sleep, Energy, Hunger, Routine, Social, then subtract normalized Stress.
     """
-    # ensure numeric
-    s = {k: clamp(v) for k,v in stats.items()}
+    # ensure numeric with safe defaults
+    s = {k: clamp(stats.get(k, 50)) for k in ["Sleep","Energy","Hunger","Routine","Social","Stress"]}
     positive_sum = s["Sleep"] + s["Energy"] + s["Hunger"] + s["Routine"] + s["Social"]
-    avg_pos = positive_sum / 5.0  # 0-100
-    # stress penalty scaled (0-100) mapped to 0-avg range
-    stress_penalty = s["Stress"]  # 0-100
-    # stability roughly: avg_pos - stress_penalty * 0.5 (some tolerance)
+    avg_pos = positive_sum / 5.0
+    stress_penalty = s["Stress"]
     stability = avg_pos - (stress_penalty * 0.5)
     stability = clamp(stability)
     return stability
-
+    
 def get_life_rank(stability: int) -> str:
     if stability >= 90:
         return "🟢 Balanced"
